@@ -24,7 +24,7 @@ This C++ project focuses on implementing and testing **two sorting algorithms** 
 ## 🧪 Sample Output
 
 ### 📸 Screenshot 1: Input + Binary Search on Unsorted Array  
-![Output 1] ![alt text](image.png)  
+![Output 1] ![alt text](image.png)
 Highlights:
 - Entered array: `5 4 3 2 1`
 - Tried Binary Search before sorting — program alerts the user.
