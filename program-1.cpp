@@ -16,6 +16,7 @@ public:
         cout << endl;
     }
 
+    //  🔁 Selection Sort Algorithm
     void SelectionSort(vector<int> &array, int start, int end)
     {
         int minimum;
@@ -35,7 +36,7 @@ public:
              << "✅ The Selection Sort Sucessfully Executed" << endl;
     }
 
-    // Merge Sort 
+    //  🔀 Merge helper for Merge Sort
     void Merge(vector<int> &array, int start, int mid, int end)
     {
         vector<int> temp;
@@ -95,7 +96,7 @@ public:
         return -1;
     }
 
-    // 🔍 Binary Search
+    // 🔍 Binary Search (Sorted Only)
     int BinarySearch(vector<int> &array, int target)
     {
         if (Sortchecker(array))
@@ -106,7 +107,7 @@ public:
             while (start <= end)
             {
                 int mid = start + (end - start) / 2;
-                if (mid == target)
+                if (array[mid] == target)
                 {
                     return mid;
                 }
