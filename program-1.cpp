@@ -226,9 +226,12 @@ int main()
             cout << endl
                  << "🗒️ Note :- " << endl
                  << "🔍 To Search In Binary The Array Must Be Sorted." << endl;
+
             cout << "🔎 Enter An Element To Search (Binary) :- ";
             cin >> key;
+
             index = obj.BinarySearch(array,key);
+
             if (index >= 0 && index < array.size())
             {
                 cout << endl
@@ -252,6 +255,7 @@ int main()
             cout << endl
                  << "⚠️ Invaild Option Please Try Again....!" << endl;
             break;
+            
         }
     } while (choice != 0);
 
