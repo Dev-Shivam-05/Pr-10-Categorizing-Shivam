@@ -1,172 +1,256 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
-void SelectionSort(vector<int> &array, int start, int end)
+class Categorizing
 {
-    int minimum;
-    for (int i = 0; i < array.size() - 1; i++)
+public:
+    // Displaying The Array 
+    void DisplayArray(vector<int> &array)
     {
-        minimum = i;
-        for (int j = i + 1; j < array.size(); j++)
+        cout << endl
+             << "🔦📊 Current Array Is :- ";
+        for (int i = 0; i < array.size(); i++)
         {
-            if (array[minimum] > array[j])
+            cout << array.at(i) << " ";
+        }
+        cout << endl;
+    }
+
+    void SelectionSort(vector<int> &array, int start, int end)
+    {
+        int minimum;
+        for (int i = 0; i < array.size(); i++)
+        {
+            minimum = i;
+            for (int j = i + 1; j < array.size(); j++)
             {
-                minimum = j;
+                if (array[minimum] > array[j])
+                {
+                    minimum = j;
+                }
+                swap(array[i], array[minimum]);
             }
-            swap(array[minimum], array[i]);
         }
+        cout << endl
+             << "✅ The Selection Sort Sucessfully Executed" << endl;
     }
-}
 
-void Merge(vector<int> &array, int start, int mid, int end)
-{
-    vector<int> temp;
-    int i = start, j = mid + 1;
-
-    while (i <= mid && j <= end)
+    // Merge Sort 
+    void Merge(vector<int> &array, int start, int mid, int end)
     {
-        if (array[i] <= array[j])
+        vector<int> temp;
+        int i = start, j = mid + 1;
+
+        while (i <= mid && j <= end)
         {
-            temp.push_back(array[i]);
+            if (array[i] < array[j])
+            {
+                temp.push_back(array[i++]);
+            }
+            else
+            {
+                temp.push_back(array[j++]);
+            }
         }
-        else
+
+        while (i <= mid)
         {
-            temp.push_back(array[j]);
+            temp.push_back(array[i++]);
         }
-    }
 
-    while (i <= mid)
-    {
-        temp.push_back(array[i]);
-    }
-
-    while (j <= end)
-    {
-        temp.push_back(array[j]);
-    }
-
-    for (int k = 0; k < temp.size(); k++)
-    {
-        array.at(start + k) = temp.at(k);
-    }
-
-}
-
-void MergeSort(vector<int> &array, int start, int end)
-{
-    if (start >= end)
-        return;
-
-    int mid = start + (end - start) / 2;
-
-    MergeSort(array, start, mid);
-    MergeSort(array, mid + 1, end);
-    Merge(array, start, mid, end);
-}
-
-int LinearSearch(vector<int> &array,int target)
-{
-    for (int i = 0; i < array.size(); i++)
-    {
-        if (array.at(i) == target)
+        while (j <= end)
         {
-            return i;
+            temp.push_back(array[j++]);
+        }
+
+        for (int k = 0; k < temp.size(); k++)
+        {
+            array[start + k] = temp[k];
         }
     }
-    return -1;
-}
 
-int BinarySearch(vector<int> &array,int target)
-{
-    int start = 0;
-    int end = array.size();
-
-    while (start <= end)
+    // 🧠 Merge Sort Recursive Algorithm
+    void MergeSort(vector<int> &array, int start, int end)
     {
+        if (start >= end)
+            return;
+
         int mid = start + (end - start) / 2;
-        if (mid == target)
+
+        MergeSort(array, start, mid);
+        MergeSort(array, mid + 1, end);
+        Merge(array, start, mid, end);
+    }
+
+    // 🔍 Linear Search
+    int LinearSearch(vector<int> &array, int target)
+    {
+        for (int i = 0; i < array.size(); i++)
         {
-            return mid;
+            if (array.at(i) == target)
+            {
+                return i;
+            }
         }
-        else if (target < mid)
+        return -1;
+    }
+
+    // 🔍 Binary Search
+    int BinarySearch(vector<int> &array, int target)
+    {
+        if (Sortchecker(array))
         {
-            end = mid - 1;
+            int start = 0;
+            int end = array.size();
+
+            while (start <= end)
+            {
+                int mid = start + (end - start) / 2;
+                if (mid == target)
+                {
+                    return mid;
+                }
+                else if (target < mid)
+                {
+                    end = mid - 1;
+                }
+                else
+                {
+                    start = mid + 1;
+                }
+            }
+            return -1;
         }
         else
         {
-            start = mid + 1;
-        }        
+            return -2;
+        }
     }
 
-    return -1;
-}
-
-void DisplayArray(vector<int> &array)
-{
-    for (int i = 0; i < array.size(); i++)
+    // ☑️ Sort Checker To Check If The Array Is Sorted Or Not
+    bool Sortchecker(vector<int> & array)
     {
-        cout << array.at(i) << " ";
+        for (int i = 0; i < array.size(); i++)
+        {
+            for (int j = i + 1; j < array.size(); j++)
+            { 
+                if (array[i] > array[j])
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
-    cout << endl;
-}
+};
 
 int main()
 {
-    int size;
+    Categorizing obj;
 
-    cout << "Enter The Size Of The Array :- ";
+    cout << endl
+         << "🎯 Welcome To Algorithm Checker." << endl;
+
+    int size, num, key, index;
+
+    cout << "🔢 Enter The Number Of Elemnts You Want In The Array :- ";
     cin >> size;
 
     vector<int> array;
 
-    cout << endl << "Enter " << size << " Elements :- ";
+    cout << endl
+         << "📩 Enter " << size << " Elements :- " << endl;
     for (int i = 0; i < size; i++)
     {
         cout << "Array[" << i << "] :- ";
-        cin >> array[i];
+        cin >> num;
+        array.push_back(num);
     }
 
     int choice;
     do
     {
-        cout << endl << "==== Program's ====" << endl;
-        cout << endl << "Press 1 To Perform Selection Sorting." << endl;
-        cout << "Press 2 To Perform Merge Sortng." << endl;
-        cout << "Press 3 To Perform Linear Search." << endl;
-        cout << "Press 4 To Perform Binary Search." << endl;
-        cout << "Press 5 To Perform Display." << endl;
-        cout << "Press 0 To Exit The Program." << endl;
+        cout << endl
+             << "========== Menu ==========" << endl;
+        cout << endl
+             << "1️⃣. Selection Sorting." << endl;
+        cout << "2️⃣. Merge Sortng." << endl;
+        cout << "3️⃣. Linear Search." << endl;
+        cout << "4️⃣. Binary Search." << endl;
+        cout << "5️⃣. Display." << endl;
+        cout << "0️⃣. Exit The Program." << endl;
 
-        cout << "Enter Your Choice :- ";
+        cout << "📌Enter Your Choice :- ";
         cin >> choice;
 
         switch (choice)
         {
         case 0:
             cout << endl
-                 << "---- Your Program Is Sucessfully Exucuted" << endl;
+                 << "👋Your Program Is Sucessfully Exucuted ----" << endl;
+            cout << endl << "Press Enter To Exit....";
+            cin.ignore();
+            cin.get();
             break;
 
         case 1:
-            SelectionSort(array,0,array.size()-1);
+            obj.SelectionSort(array, 0, array.size() - 1);
             break;
 
         case 2:
+            obj.MergeSort(array, 0, array.size() - 1);
+            cout << endl
+                 << "✅ Merge Sort Is Sucessfully Executed." << endl;
             break;
 
         case 3:
+            obj.DisplayArray(array);
+            cout << "🔎 Enter An Element Element To Search (Linear) :- ";
+            cin >> key;
+
+            index = obj.LinearSearch(array, key);
+            
+            if (index >= 0)
+            {
+                cout << endl
+                     << "🎉 The Element " << key << " Is Founded At Index " << index;
+            }
+            else
+            {
+                cout << "❌ The Element " << key << " Is Not Avaible In The Given Array";
+            }
             break;
 
         case 4:
+            obj.DisplayArray(array);
+            cout << endl
+                 << "🗒️ Note :- " << endl
+                 << "🔍 To Search In Binary The Array Must Be Sorted." << endl;
+            cout << "🔎 Enter An Element To Search (Binary) :- ";
+            cin >> key;
+            index = obj.BinarySearch(array,key);
+            if (index >= 0 && index < array.size())
+            {
+                cout << endl
+                     << "🎊 The Element " << key << " Is Founded At Index " << index;
+            }
+            else if (index == -2)
+            {
+                cout << endl << "👎 The Array Is Not Sorted Please Sort It First." << endl;
+            }
+            else            
+            {
+                cout << "❌ The Element " << key << " Is Not Avaible In The Given Array";
+            }
             break;
 
         case 5:
+            obj.DisplayArray(array);
             break;
 
         default:
             cout << endl
-                 << "Wrong Choice....!" << endl;
+                 << "⚠️ Invaild Option Please Try Again....!" << endl;
             break;
         }
     } while (choice != 0);
